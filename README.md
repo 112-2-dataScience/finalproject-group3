@@ -1,4 +1,4 @@
-# [GroupID] your project title
+# [GroupID] 藝術風格探索:利用特徵提取與機器學習進行圖像分類
 The goals of this project.
 
 ## Contributors
