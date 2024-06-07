@@ -1,4 +1,5 @@
 # [Group3] 藝術風格探索:利用特徵提取與機器學習進行圖像分類
+The goals of this project.
 - Topic 1: 圖像分類的耗時
 - Topic 2: 深度學習的限制與挑戰
 
