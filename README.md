@@ -1,11 +1,16 @@
-# [GroupID] 藝術風格探索:利用特徵提取與機器學習進行圖像分類
-The goals of this project.
+# [Group3] 藝術風格探索:利用特徵提取與機器學習進行圖像分類
+- Topic 1: 圖像分類的耗時
+- Topic 2: 深度學習的限制與挑戰
 
 ## Contributors
 |組員|系級|學號|工作分配|
 |-|-|-|-|
-|何大南|資科碩二|110753202|團隊中的吉祥物🦒，負責增進團隊氣氛| 
-|張小明|資科碩二|xxxxxxxxx|團隊的中流砥柱，一個人打十個|
+|高崇哲|統計碩一|112354020||
+|林青欣|教育碩一|112152012|| 
+|黃翊瑄|資科碩一|112753108||
+|陳彥竹|資管大四|109306094||
+|李佳芬|資科碩一|112753103||
+|鄭家晏|資科大四|109703067||
 
 ## Quick start
 Please provide an example command or a few commands to reproduce your analysis, such as the following R script:
