@@ -322,3 +322,138 @@ boxplot <- ggplot(melted_data, aes(x = variable, y = value, fill = label)) +
   guides(fill = guide_legend(title = "Label"))
 print(boxplot)
 ```
+
+計算圖像形狀特徵(area, centroid, convex hull area, circularity, orientation)，並保存到CSV文件。 
+
+```{r}
+# 函數：計算凸多邊形的面積
+polygon_area <- function(x, y) {
+  if (length(x) < 3 || length(y) < 3) {
+    return(0)
+  }
+  
+  area <- 0
+  for (i in 1:(length(x) - 1)) {
+    area <- area + (x[i] * y[i + 1] - x[i + 1] * y[i])
+  }
+  area <- area + (x[length(x)] * y[1] - x[1] * y[length(y)])
+  area <- abs(area) / 2
+  return(area)
+}
+
+# 函數：計算連通區域的方向
+calculate_orientation <- function(region_pixels) {
+  centered_pixels <- scale(region_pixels, scale = FALSE)
+  pca_result <- prcomp(centered_pixels)
+  orientation <- atan2(pca_result$rotation[2, 1], pca_result$rotation[1, 1])
+  return(orientation)
+}
+
+# 函數：計算環狀度
+calculate_circularity <- function(region_pixels) {
+  perimeter <- length(region_pixels)
+  area <- nrow(region_pixels)
+  circularity <- 4 * pi * area / (perimeter^2)
+  return(circularity)
+}
+
+# 函數：從圖片中提取形狀特徵
+extract_shape_features <- function(image_path) {
+  img <- load.image(image_path)
+  gray_img <- grayscale(img)
+  edges <- cannyEdges(gray_img)
+  components <- label(edges)
+  shape_features <- data.frame(Area = numeric(), Centroid_X = numeric(), Centroid_Y = numeric(), Convex_Hull_Area=numeric(), Orientation = numeric(), Circularity = numeric())
+  
+  for (i in 1:max(components)) {
+    region_pixels <- which(components == i, arr.ind = TRUE)
+    area <- nrow(region_pixels)
+    centroid_x <- mean(region_pixels[, 2])
+    centroid_y <- mean(region_pixels[, 1])
+    convex_hull <- chull(region_pixels)
+    convex_hull_area <- polygon_area(region_pixels[convex_hull, 2], region_pixels[convex_hull, 1])
+    circularity <- calculate_circularity(region_pixels)
+    orientation <- calculate_orientation(region_pixels)
+    
+    shape_features[i, ] <- c(area, centroid_x, centroid_y, convex_hull_area, orientation, circularity)
+  }
+  
+  mean_features <- colMeans(shape_features)
+  return(as.data.frame(t(mean_features)))
+}
+train_paths <- c("final_jpeg_data/train/drawings", "final_jpeg_data/train/engraving", "final_jpeg_data/train/iconography", "final_jpeg_data/train/sculpture")
+test_paths <- c("final_jpeg_data/test/drawings", "final_jpeg_data/test/engraving", "final_jpeg_data/test/iconography", "final_jpeg_data/test/sculpture")
+training_shape_features <- data.frame()
+validation_shape_features <- data.frame()
+
+for (folder_path in train_paths) {
+  label <- basename(folder_path)
+  files <- list.files(folder_path, pattern = ".jpeg", full.names = TRUE)
+  
+  for (file in files) {
+    training_shape_feature <- extract_shape_features(file)
+    training_shape_feature$Label <- label
+    training_shape_features <- rbind(training_shape_features, training_shape_feature)
+  }
+}
+for (folder_path in test_paths) {
+  label <- basename(folder_path)
+  files <- list.files(folder_path, pattern = ".jpeg", full.names = TRUE)
+  
+  for (file in files) {
+    validation_shape_feature <- extract_shape_features(file)
+    validation_shape_feature$Label <- label
+    validation_shape_features <- rbind(validation_shape_features, validation_shape_feature)
+  }
+}
+
+# 把缺失值換成平均值
+numeric_cols <- sapply(training_shape_features, is.numeric)
+for (col in names(training_shape_features)[numeric_cols]) {
+  training_shape_features[is.na(training_shape_features[, col]), col] <- mean(training_shape_features[, col], na.rm = TRUE)
+}
+numeric_cols <- sapply(validation_shape_features, is.numeric)
+for (col in names(validation_shape_features)[numeric_cols]) {
+  validation_shape_features[is.na(validation_shape_features[, col]), col] <- mean(validation_shape_features[, col], na.rm = TRUE)
+}
+
+# 去掉最後一列（類別標籤）
+training_features_data <- training_shape_features[, -ncol(training_shape_features)]
+validation_features_data <- validation_shape_features[, -ncol(validation_shape_features)]
+
+# 正規化數據
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+training_normalized_features <- as.data.frame(lapply(training_features_data, normalize))
+training_normalized_features$Label <- training_shape_features$Label
+validation_normalized_features <- as.data.frame(lapply(validation_features_data, normalize))
+validation_normalized_features$Label <- validation_shape_features$Label
+
+# 保存數據到 CSV
+write.csv(training_normalized_features, "(final) training_shape_features_normalized.csv", row.names = FALSE)
+write.csv(validation_normalized_features, "(final) validation_shape_features_normalized.csv", row.names = FALSE)
+```
+
+將圖像形狀特徵，繪製成 box plot。
+
+```{r}
+# 繪製正規化後的數據盒狀圖
+melted_normalized_data <- melt(training_normalized_features, id.vars = "Label")
+
+boxplot_normalized <- ggplot(melted_normalized_data, aes(x = variable, y = value, fill = Label)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = "*") +
+  labs(title = "Boxplot of Normalized Shape Features",
+       x = "Features",
+       y = "Value") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(hjust = 1)) +
+  scale_fill_manual(values = c("drawings" = "#7070db", 
+                               "engraving" = "#ff704d", 
+                               "iconography" = "#59b300",
+                               "sculpture" = "#ff66a3")) +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "bottom") +
+  guides(fill = guide_legend(title = "Label"))
+print(boxplot_normalized)
+```
