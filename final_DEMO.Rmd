@@ -130,97 +130,6 @@ boxplot <- ggplot(melted_data, aes(x = variable, y = value, fill = label)) +
 print(boxplot)
 ```
 
-
-讀取各項提取後的特徵，將研究過後的最佳特徵組合進行整併。
-
-```{r}
-data1 <- read.csv("train_mean_var_diff.csv")
-data2 <- read.csv("train_structure.csv")
-data5 <- read.csv("train_texture.csv")
-data7 <- read_excel("(train) shape_features_normalized.xlsx")
-
-train_data <- cbind(data1, data2[, -4], data5[, -c(4, 5)], data7[, -c(1, 2, 3, 4, 5, 6, 7)])
-
-data3 <- read.csv("test_mean_var_diff.csv")
-data4 <- read.csv("test_structure.csv")
-data6 <- read.csv("test_texture.csv")
-data8 <- read_excel("(test) shape_features_normalized.xlsx")
-
-test_data <- cbind(data3, data4[, -4], data6[, -c(4, 5)], data8[, -c(1, 2, 3, 4, 5, 6, 7)])
-train_label <- as.factor(train_data$label)
-test_label <- as.factor(test_data$label)
-```
-
-使用我們的最佳SVM模型，cost設置為4，gamma設置為0.2，最終測試準確率為0.77。
-
-```{r}
-svm_model <- svm(train_label ~ ., data = train_data[, -10], kernel = "radial", 
-                 cost = 4, gamma = 0.2)
-y_pred <- predict(svm_model, test_data[, -10])
-accuracy <- mean(y_pred == test_label)
-
-print(paste("Test Accuracy:", accuracy))
-```
-
-測試集的混淆矩陣，從對角線可以看出大部分畫作得到正確分類，但在分類drawings跟engraving有些許困難。
-
-```{r}
-conf_matrix <- table(test_label, y_pred)
-colorPalette <- colorRampPalette(c("white", "#4682B4"))(200)
-
-heatmap.2(conf_matrix, 
-          trace = "none",          
-          col = colorPalette,      
-          dendrogram = "none",     
-          main = "Confusion Matrix",  
-          xlab = "Predicted",      
-          ylab = "Actual",         
-          margins = c(5, 10),      
-          cellnote = conf_matrix,  
-          notecol = "black",       
-          density.info = "none",   
-          key = TRUE,              
-          keysize = 1.5,
-          cexRow = 0.8,            
-          cexCol = 0.8,
-          cex.axis = 0.9,
-          key.title = NA)        
-```
-
-訓練準確率為0.882。
-
-```{r}
-y_pred <- predict(svm_model, train_data[, -10])
-accuracy <- mean(y_pred == train_label)
-
-print(paste("Train Accuracy:", accuracy))
-```
-
-訓練集的混淆矩陣。
-
-```{r}
-conf_matrix <- table(train_label, y_pred)
-colorPalette <- colorRampPalette(c("white", "#4682B4"))(200)
-
-heatmap.2(conf_matrix, 
-          trace = "none",          
-          col = colorPalette,      
-          dendrogram = "none",     
-          main = "Confusion Matrix",  
-          xlab = "Predicted",      
-          ylab = "Actual",         
-          margins = c(5, 10),      
-          cellnote = conf_matrix,  
-          notecol = "black",       
-          density.info = "none",   
-          key = TRUE,              
-          keysize = 1.5,
-          cexRow = 0.8,            
-          cexCol = 0.8,
-          cex.axis = 0.9,
-          key.title = NA) 
-```
-
 計算圖像結構特徵(layers, symmetry, alignment)，並保存到CSV文件。 
 
 ```{r}
@@ -322,6 +231,7 @@ boxplot <- ggplot(melted_data, aes(x = variable, y = value, fill = label)) +
   guides(fill = guide_legend(title = "Label"))
 print(boxplot)
 ```
+
 計算圖像紋理特徵(contrast, dissimilarity, homogeneity, energy)，並保存到CSV文件。
 
 ```{r}
@@ -636,4 +546,94 @@ boxplot_normalized <- ggplot(melted_normalized_data, aes(x = variable, y = value
         legend.position = "bottom") +
   guides(fill = guide_legend(title = "Label"))
 print(boxplot_normalized)
+```
+
+讀取各項提取後的特徵，將研究過後的最佳特徵組合進行整併。
+
+```{r}
+data1 <- read.csv("train_mean_var_diff.csv")
+data2 <- read.csv("train_structure.csv")
+data5 <- read.csv("train_texture.csv")
+data7 <- read_excel("(train) shape_features_normalized.xlsx")
+
+train_data <- cbind(data1, data2[, -4], data5[, -c(4, 5)], data7[, -c(1, 2, 3, 4, 5, 6, 7)])
+
+data3 <- read.csv("test_mean_var_diff.csv")
+data4 <- read.csv("test_structure.csv")
+data6 <- read.csv("test_texture.csv")
+data8 <- read_excel("(test) shape_features_normalized.xlsx")
+
+test_data <- cbind(data3, data4[, -4], data6[, -c(4, 5)], data8[, -c(1, 2, 3, 4, 5, 6, 7)])
+train_label <- as.factor(train_data$label)
+test_label <- as.factor(test_data$label)
+```
+
+使用我們的最佳SVM模型，cost設置為4，gamma設置為0.2，最終測試準確率為0.77。
+
+```{r}
+svm_model <- svm(train_label ~ ., data = train_data[, -10], kernel = "radial", 
+                 cost = 4, gamma = 0.2)
+y_pred <- predict(svm_model, test_data[, -10])
+accuracy <- mean(y_pred == test_label)
+
+print(paste("Test Accuracy:", accuracy))
+```
+
+測試集的混淆矩陣，從對角線可以看出大部分畫作得到正確分類，但在分類drawings跟engraving有些許困難。
+
+```{r}
+conf_matrix <- table(test_label, y_pred)
+colorPalette <- colorRampPalette(c("white", "#4682B4"))(200)
+
+heatmap.2(conf_matrix, 
+          trace = "none",          
+          col = colorPalette,      
+          dendrogram = "none",     
+          main = "Confusion Matrix",  
+          xlab = "Predicted",      
+          ylab = "Actual",         
+          margins = c(5, 10),      
+          cellnote = conf_matrix,  
+          notecol = "black",       
+          density.info = "none",   
+          key = TRUE,              
+          keysize = 1.5,
+          cexRow = 0.8,            
+          cexCol = 0.8,
+          cex.axis = 0.9,
+          key.title = NA)        
+```
+
+訓練準確率為0.882。
+
+```{r}
+y_pred <- predict(svm_model, train_data[, -10])
+accuracy <- mean(y_pred == train_label)
+
+print(paste("Train Accuracy:", accuracy))
+```
+
+訓練集的混淆矩陣。
+
+```{r}
+conf_matrix <- table(train_label, y_pred)
+colorPalette <- colorRampPalette(c("white", "#4682B4"))(200)
+
+heatmap.2(conf_matrix, 
+          trace = "none",          
+          col = colorPalette,      
+          dendrogram = "none",     
+          main = "Confusion Matrix",  
+          xlab = "Predicted",      
+          ylab = "Actual",         
+          margins = c(5, 10),      
+          cellnote = conf_matrix,  
+          notecol = "black",       
+          density.info = "none",   
+          key = TRUE,              
+          keysize = 1.5,
+          cexRow = 0.8,            
+          cexCol = 0.8,
+          cex.axis = 0.9,
+          key.title = NA) 
 ```
