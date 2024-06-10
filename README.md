@@ -65,5 +65,5 @@ e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、re
 * Is the improvement significant?
 
 ## References
-* Packages you use
+* Packages you use : e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、readbitmap
 * Related publications
