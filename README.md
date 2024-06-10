@@ -35,7 +35,7 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
   * Size
 
 ### code
-資料預處理:
+資料預處理:<br>
 (1) 圖片篩選：由於此資料集含有jpeg、jpg、png的圖片，為了統一格式，採用數量最多的 jpeg 格式，但painting無jpeg格式的圖片，因此將此類別去除，取其餘四個類別之圖片<br>
 (2) 手動刪除不合適之資料（例如：多張圖片集於一張、不屬於該類別<br>
 (3) 隨機將各類別之訓練集調整至500張、測試集調整至50張<br>
@@ -50,6 +50,10 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
 |結構|3|分層結構(Layers)、對稱性(Symmetry)、對齊度(Alignment)||
 |紋理|4|對比度(Contrast)、能量(Energy)、同質性(Homogeneity)、異質性(Dissimilarity)||
 |形狀|6|面積(Area)、重心(Centroid[X,Y])、凸包面積(Convex Hull Area)、方向(Orientation)、圓度(Circularity)||
+
+特徵選取<br>
+在紋理特徵中，從公式可以得知對比度為異質性的平方，因此將異質性欄位刪除。此外，也將所有特徵做<br>
+正規化後，透過EDA觀察所有特徵的關係與分布，無發現任何異樣，因此保留其餘所有特徵。<br>
 
 * Which method or package do you use?
 * How do you perform training and evaluation?
