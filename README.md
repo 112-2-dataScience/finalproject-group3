@@ -23,16 +23,19 @@ Rscript code/your_script.R --input data/training --output results/performance.ts
 idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Projects.](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424) PLoS Comput Biol 5(7): e1000424.
 
 ### docs
-* Your presentation, 1122_DS-FP_groupID.ppt/pptx/pdf (i.e.,1122_DS-FP_group1.ppt), by **06.13**
-* Any related document for the project, i.e.,
-  * discussion log
-  * software user guide
+* project.pdf: presentation的簡報檔
+* poster.pdf: 海報展演所製作的海報
 
 ### data
 * Input
-  * Source: 
-  * Format
-  * Size
+  * Source: https://www.kaggle.com/datasets/thedownhill/art-images-drawings-painting-sculpture-engraving
+  * Format: jpeg、jpg、png格式之圖片
+  * Size: 約有9000張圖片
+
+* 本研究使用之資料
+  * train: 共有2000張jpeg格式之圖片，drawings/painting/icongraphy/sculpture四個種類各500張
+  * test: 共有200張jpeg格式之圖片，drawings/painting/icongraphy/sculpture四個種類各50張
+
 
 ### code
 資料預處理:<br>
