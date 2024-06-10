@@ -44,7 +44,8 @@ painting無jpeg格式的圖片，因此將此類別去除，取其餘四個類�
 
 特徵提取
 由於本研究所使用之資料集為圖片資料，因此需自行對圖像做特徵提取。以下是本研究所提取之特徵：
-|特徵類型|特徵數|特徵名稱||
+|特徵類型|特徵數|特徵名稱|
+|-|-|-|-|
 |顏色|9|RGB平均數(Mean)、RGB變異數(Variance)、RGB一階差分值(Diff)|| 
 |結構|3|分層結構(Layers)、對稱性(Symmetry)、對齊度(Alignment)||
 |紋理|4|對比度(Contrast)、能量(Energy)、同質性(Homogeneity)、異質性(Dissimilarity)||
