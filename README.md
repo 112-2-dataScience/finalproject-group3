@@ -30,7 +30,7 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
 
 ### data
 * Input
-  * Source
+  * Source: 
   * Format
   * Size
 
@@ -38,7 +38,6 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
 資料預處理:<br>
 (1) 圖片篩選：由於此資料集含有jpeg、jpg、png的圖片，為了統一格式，採用數量最多的 jpeg 格式，<br>
              但painting無jpeg格式的圖片，因此將此類別去除，取其餘四個類別之圖片<br>
-             
 (2) 手動刪除不合適之資料（例如：多張圖片集於一張、不屬於該類別<br>
 (3) 隨機將各類別之訓練集調整至500張、測試集調整至50張<br>
 (4) 裁切圖片：將所有圖片resize至128*128<br>
