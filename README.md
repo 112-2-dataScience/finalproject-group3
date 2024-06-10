@@ -35,7 +35,21 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
   * Size
 
 ### code
-* Analysis steps
+資料預處理:
+(1) 圖片篩選：由於此資料集含有jpeg、jpg、png的圖片，為了統一格式，採用數量最多的 jpeg 格式，但
+painting無jpeg格式的圖片，因此將此類別去除，取其餘四個類別之圖片
+(2) 手動刪除不合適之資料（例如：多張圖片集於一張、不屬於該類別）
+(3) 隨機將各類別之訓練集調整至500張、測試集調整至50張
+(4) 裁切圖片：將所有圖片resize至128*128
+
+特徵提取
+由於本研究所使用之資料集為圖片資料，因此需自行對圖像做特徵提取。以下是本研究所提取之特徵：
+|特徵類型|特徵數|特徵名稱||
+|顏色|9|RGB平均數(Mean)、RGB變異數(Variance)、RGB一階差分值(Diff)|| 
+|結構|3|分層結構(Layers)、對稱性(Symmetry)、對齊度(Alignment)||
+|紋理|4|對比度(Contrast)、能量(Energy)、同質性(Homogeneity)、異質性(Dissimilarity)||
+|形狀|6|面積(Area)、重心(Centroid[X,Y])、凸包面積(Convex Hull Area)、方向(Orientation)、圓度(Circularity)||
+
 * Which method or package do you use?
 * How do you perform training and evaluation?
   * Cross-validation, or extra separated data
