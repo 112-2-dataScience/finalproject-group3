@@ -16,7 +16,7 @@ The goals of this project.
 ## Quick start
 Please provide an example command or a few commands to reproduce your analysis, such as the following R script:
 ```R
-Rscript code/your_script.R --input data/training --output results/performance.tsv
+Rscript code/your_script.R --input data/training --output results/performance.csv
 ```
 
 ## Folder organization and its related description
