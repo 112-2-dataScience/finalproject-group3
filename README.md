@@ -63,7 +63,24 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
 e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、readbitmap
 
 ### results
-* What is your performance?
+* 訓練結果<br>
+ * Accuracy 比較：
+  * 不用過多特徵即可達到不錯效果
+  * 5個特徵的SVM表現最好，但在21個特徵表現較差，推測因為SVM過擬合，導致效果較差
+
+| 特徵數 | SVM  | Random Forest | GBM  |
+| ------ | ---- | ------------- | ---- |
+| RGB平均數、變異數 | 6    | 0.61          | 0.605 |
+| RGB平均數、變異數、一階差分值 | 9    | 0.705         | 0.685 |
+| RGB平均數、變異數、一階差分值、結構特徵值 | 12   | 0.75          | <span style="color:red">0.715</span> |
+| RGB平均數、變異數、一階差分值、結構特徵值、紋理特徵值 | 15   | <span style="color:red">0.77</span> | 0.69  |
+| RGB平均數、變異數、一階差分值、結構特徵值、紋理特徵值、形狀特徵值 | 21   | 0.59          | <span style="color:red">0.7</span>  | 0.69  |
+
+ * 模型選擇：<br>
+ 我們使用Loglikelihood幫助我們比較各個模型
+![模型比較](./results/模型比較.png)
+
+
 * Is the improvement significant?
 
 ## References
