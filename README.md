@@ -11,7 +11,7 @@ The goals of this project.
 |黃翊瑄|資科碩一|112753108||
 |陳彥竹|資管大四|109306094|模型訓練、簡報製作、Github製作|
 |李佳芬|資科碩一|112753103||
-|鄭家晏|資科大四|109703067||
+|鄭家晏|資科大四|109703067|特徵工程、口頭報告|
 
 ## Quick start
 Please provide an example command or a few commands to reproduce your analysis, such as the following R script:
