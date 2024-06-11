@@ -76,13 +76,15 @@ e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、re
 | RGB平均數、變異數、一階差分值、結構特徵值、紋理特徵值、形狀特徵值 | 21   | 0.59          | <span style="color:red">0.7</span>  | 0.69  |
 
 * 模型選擇：<br>
- 我們使用Loglikelihood幫助我們比較各個模型
+ 我們使用對數似然值是一種衡量統計模型對觀測數據的解釋能力的指標。數值越大（越接近零），表示模型對數據的解釋能力越好。SVM模型的對數似然值最大，表示它對數據的解釋能力最好。
 
 <img src="./results/模型比較.png" alt="模型比較" width="400"/>
 
 * 最佳模型的混淆矩陣
+我們可以發現較接近右上角的兩個分類"engraving" & "drawings" 分得較為不好。回到資料集去觀察後可發現，這兩個分類長得相似、顏色也大多為基礎的黑白，因此可能在現有的特徵資料上較難區分這兩個藝術風格。
  
 <img src="./results/混淆矩陣.png" alt="混淆矩陣" width="800"/>
+<img src="./results/畫作風格比較.png" alt="畫作風格比較" width="800"/>
 
 * Is the improvement significant?
 
