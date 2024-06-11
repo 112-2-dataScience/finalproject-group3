@@ -82,7 +82,7 @@ e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、re
 
 * 最佳模型的混淆矩陣
  
-<img src="./results/混淆矩陣.png" alt="混淆矩陣" width="400"/>
+<img src="./results/混淆矩陣.png" alt="混淆矩陣" width="800"/>
 
 * Is the improvement significant?
 
