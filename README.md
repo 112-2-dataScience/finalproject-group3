@@ -64,9 +64,9 @@ e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、re
 
 ### results
 * 訓練結果<br>
- * Accuracy 比較：
-  * 不用過多特徵即可達到不錯效果
-  * 5個特徵的SVM表現最好，但在21個特徵表現較差，推測因為SVM過擬合，導致效果較差
+  * Accuracy 比較：
+    * 不用過多特徵即可達到不錯效果
+    * 5個特徵的SVM表現最好，但在21個特徵表現較差，推測因為SVM過擬合，導致效果較差
 
 | 特徵數 | SVM  | Random Forest | GBM  |
 | ------ | ---- | ------------- | ---- |
@@ -76,9 +76,10 @@ e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、re
 | RGB平均數、變異數、一階差分值、結構特徵值、紋理特徵值 | 15   | <span style="color:red">0.77</span> | 0.69  |
 | RGB平均數、變異數、一階差分值、結構特徵值、紋理特徵值、形狀特徵值 | 21   | 0.59          | <span style="color:red">0.7</span>  | 0.69  |
 
- * 模型選擇：<br>
+  * 模型選擇：<br>
  我們使用Loglikelihood幫助我們比較各個模型
-![模型比較](./results/模型比較.png)
+
+<img src="./results/模型比較.png" alt="模型比較" width="400"/>
 
 
 * Is the improvement significant?
