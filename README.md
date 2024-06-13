@@ -25,7 +25,7 @@ idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Proje
 ### docs
 * project.pdf: presentation的簡報檔
 * poster.pdf: 海報展演所製作的海報 <br>
-  <img src="./docs/DS_poster.jpg" alt="海報" width="500"/>
+  <img src="./docs/DS_poster.jpg" alt="海報" width="600"/>
 
 ### data
 * Input
