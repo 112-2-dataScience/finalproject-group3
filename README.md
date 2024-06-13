@@ -20,7 +20,7 @@ Rscript code/your_script.R --input data/training --output results/performance.cs
 ```
 
 ## Folder organization and its related description
-idea by Noble WS (2009) [A Quick Guide to Organizing Computational Biology Projects.](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424) PLoS Comput Biol 5(7): e1000424.
+以下為本研究相關資料與數據
 
 ### docs
 * project.pdf: presentation的簡報檔
@@ -91,4 +91,3 @@ e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、re
 
 ## References
 * Packages you use : e1071、jpeg、ROCR、caret、imager、gplots、readxl、ggplot2、reshape2、readbitmap
-* Related publications
